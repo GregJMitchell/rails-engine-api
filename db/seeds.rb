@@ -19,6 +19,8 @@ system(cmd)
 # TODO
 # - Import the CSV data into the Items table
 CSV.foreach('db/data/items.csv', headers: true) do |row|
+  price = row['unit_price'].to_f
+  row['unit_price'] = price / 100
   Item.create row.to_hash
 end
 # - Add code to reset the primary key sequences on all 6 tables (merchants, items, customers, invoices, invoice_items, transactions)
