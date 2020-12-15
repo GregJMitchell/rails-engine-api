@@ -71,4 +71,12 @@ describe 'Merchants API' do
 
     expect(Merchant.all.count).to eq(0)
   end
+
+  it 'Can update a merchant' do
+    merchant = create :merchant
+
+    patch "/api/v1/merchants/#{merchant.id}?name=Testing"
+
+    expect(Merchant.find(merchant.id).name).to eq('Testing')
+  end
 end
