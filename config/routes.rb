@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :items, only: %i[index show create destroy update]
-      resources :merchants, only: %i[show]
+      resources :merchants, only: %i[show index create]
     end
   end
 end
