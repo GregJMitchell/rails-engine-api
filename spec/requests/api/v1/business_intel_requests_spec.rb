@@ -51,7 +51,6 @@ describe 'Business intelligence endpoints' do
     get '/api/v1/merchants/most_revenue?quantity=5'
     json = JSON.parse(response.body, symbolize_names: true)
 
-    require 'pry'; binding.pry
     
     expect(response).to be_successful
 
