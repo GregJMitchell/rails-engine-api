@@ -85,4 +85,29 @@ describe 'Business intelligence endpoints' do
     expect(json[:data][2][:attributes][:name]).to eq(@merchant9.name)
     expect(json[:data][2][:id]).to eq(@merchant9.id.to_s)
   end
+
+  it 'can get revenue between two dates' do
+    get '/api/v1/revenue?start=2015-03-09&end=2017-03-24'
+
+    json = JSON.parse(response.body, symbolize_names: true)
+
+    expect(response).to be_successful
+
+    expected = Invoice.revenue('2015-03-09', '2017-03-24')[0].revenue
+
+    expect(json[:data][:attributes][:revenue].to_f.round(2)).to eq(expected)
+  end
+
+  it 'can get revenue of a single merchant' do
+    get "/api/v1/merchants/#{@merchant1.id}/revenue"
+
+    json = JSON.parse(response.body, symbolize_names: true)
+
+    expect(response).to be_successful
+
+    expected = @merchant1.revenue[0].revenue
+
+    expect(json[:data][:id]).to be_nil
+    expect(json[:data][:attributes][:revenue].to_f.round(2)).to eq(expected)
+  end
 end
